@@ -2,3 +2,4 @@ tensorflow
 pandas
 seaborn
 streamlit
+streamlit_option_menu
