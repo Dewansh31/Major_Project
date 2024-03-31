@@ -1,9 +1,14 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
-from PIL import Image,ImageDraw
+from PIL import Image, ImageDraw
 import imagerec
+from googletrans import Translator
+from languages import *
 
-st.set_page_config(layout='wide', initial_sidebar_state='expanded', )
+st.set_page_config(
+    layout="wide",
+    initial_sidebar_state='expanded',
+)
 
 # sidebar
 with st.sidebar:
@@ -15,10 +20,24 @@ with st.sidebar:
                            # icons=['', 'person'],
                            default_index=0)
 
+    target_language = st.selectbox(
+        'Select Language',
+        languages)
+
+    translate = st.button('Change Language')
 
 if selected == 'Home':
+    title_text = st.title("NeuroVision")
 
-    st.title("NeuroVision")
+    # st.title("Language Translation App")
+    # source_text = st.text_area("Enter text to translate:")
+    # target_language = st.selectbox("Select target language:", languages)
+    # translate = st.button('Translate')
+    # if translate:
+    #     translator = Translator()
+    #     out = translator.translate(title_text.text, dest=target_language)
+    #     st.write(out.text)
+
 
     st.write('<style>div.row-widget.stMarkdown { font-size: 24px; }</style>', unsafe_allow_html=True)
 
@@ -29,8 +48,16 @@ if selected == 'Home':
 
 
     def page_layout():
-        st.write(
-            "NeuroVision introduces a cutting-edge approach to brain tumor detection utilizing MRI images. This system amalgamates sophisticated machine learning algorithms, particularly Convolutional Neural Networks (CNNs), to analyze MRI scans swiftly and accurately. Similar to HealthVision, our platform is engineered to pinpoint ailments, but with a specialized focus on neurological conditions like brain tumors. By harnessing advanced computational techniques, NeuroVision aims to revolutionize medical diagnostics, offering precise and timely identification of brain tumors through the interpretation of MRI data.")
+
+        session_state = st.session_state
+        session_state.desc_var = "NeuroVision introduces a cutting-edge approach to brain tumor detection utilizing MRI images. This system amalgamates sophisticated machine learning algorithms, particularly Convolutional Neural Networks (CNNs), to analyze MRI scans swiftly and accurately. Similar to HealthVision, our platform is engineered to pinpoint ailments, but with a specialized focus on neurological conditions like brain tumors. By harnessing advanced computational techniques, NeuroVision aims to revolutionize medical diagnostics, offering precise and timely identification of brain tumors through the interpretation of MRI data."
+
+        desc = st.write(session_state.desc_var)
+
+        if translate:
+            translator = Translator()
+            out = translator.translate(session_state.desc_var, dest=target_language)
+            session_state.desc_var = out.text
 
         st.markdown("## Benefits:")
         st.write("- Fast and accurate diagnosis of tumors")
@@ -45,13 +72,17 @@ if selected == 'Home':
 
         st.markdown("## Uses:")
         st.write("- Hospitals and clinics can use HealthVision to diagnose diseases more quickly")
-        st.write("- Patients can use NeuroVision to get a quick and accurate diagnosis without the need for invasive procedures")
+        st.write(
+            "- Patients can use NeuroVision to get a quick and accurate diagnosis without the need for invasive procedures")
         st.write("- NeuroVision can be used to screen large populations for brain tumors")
 
         st.markdown("## Future Scope:")
-        st.write(" - Enhanced Accuracy: Continued advancements in machine learning and artificial intelligence algorithms will improve the accuracy and reliability of brain tumor detection systems. Integration of deep learning techniques and access to larger datasets will enable more precise identification and characterization of tumors.")
-        st.write(" - Real-time Monitoring: Development of real-time monitoring capabilities will allow continuous assessment of tumor growth and response to treatment. This can enable timely intervention and adjustments in treatment strategies, improving patient care and prognosis.")
-        st.write(" - Integration with Healthcare Ecosystem: Brain tumor detection systems will likely become seamlessly integrated into the broader healthcare ecosystem. This includes interoperability with electronic health records, communication with other medical devices, and integration into telemedicine platforms for remote consultations and monitoring.")
+        st.write(
+            " - Enhanced Accuracy: Continued advancements in machine learning and artificial intelligence algorithms will improve the accuracy and reliability of brain tumor detection systems. Integration of deep learning techniques and access to larger datasets will enable more precise identification and characterization of tumors.")
+        st.write(
+            " - Real-time Monitoring: Development of real-time monitoring capabilities will allow continuous assessment of tumor growth and response to treatment. This can enable timely intervention and adjustments in treatment strategies, improving patient care and prognosis.")
+        st.write(
+            " - Integration with Healthcare Ecosystem: Brain tumor detection systems will likely become seamlessly integrated into the broader healthcare ecosystem. This includes interoperability with electronic health records, communication with other medical devices, and integration into telemedicine platforms for remote consultations and monitoring.")
 
 
     # Render page layout
@@ -154,12 +185,10 @@ if selected == 'About Us':
 
     st.header("Meet the Team")
 
-    col1, col2, = st.columns((1,2))
+    col1, col2, = st.columns((1, 2))
 
     with col1:
-
         st.image("DY.jpg", width=200)
-
 
     with col2:
         st.subheader("Dewansh Yadav")
@@ -167,10 +196,9 @@ if selected == 'About Us':
         st.write("His interests include machine learning, web development, data science and artificial intelligence.")
         st.write("Contact: dewanshyadaw8@gmail.com , +91 7879690005")
 
-    col3, col4, = st.columns((1,2))
+    col3, col4, = st.columns((1, 2))
 
     with col3:
-
         st.image("RK.jpeg", width=200)
 
     with col4:
@@ -178,5 +206,3 @@ if selected == 'About Us':
         st.write("Rakshit is also a final year Computer Science Engineering student.")
         st.write("His interests include data science, software development, and artificial intelligence.")
         st.write("Contact: yadavrakshit097@gmail.com , +91 7879426699")
-
-

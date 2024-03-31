@@ -1,5 +1,8 @@
-tensorflow
+tensorflow~=2.15.0
 pandas
 seaborn
-streamlit
+streamlit~=1.31.1
 streamlit_option_menu
+numpy~=1.26.4
+pillow~=10.2.0
+keras~=2.15.0
